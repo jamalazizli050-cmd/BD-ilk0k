@@ -1,0 +1,263 @@
+/* =========================================================
+   ГЛОБАЛЬНЫЕ СТИЛИ И ТОКЕНЫ ДИЗАЙНА
+   Тема: минималистичный игровой интерфейс (HUD инди-игры).
+   Тёмный графит + один акцент (кислотный лайм).
+   Хочешь другой акцент — меняй только --accent и --accent-ink.
+   ========================================================= */
+
+:root {
+  /* --- цвета --- */
+  --bg-0: #0b0d12;
+  --bg-1: #0d0f14;
+  --bg-2: #14171f;
+  --bg-3: #1a1e28;
+
+  --panel: rgba(255, 255, 255, 0.026);
+  --panel-2: rgba(255, 255, 255, 0.045);
+  --line: rgba(255, 255, 255, 0.075);
+  --line-2: rgba(255, 255, 255, 0.14);
+
+  --text: #e9ebf1;
+  --text-2: #9aa2b4;
+  --text-3: #626a7c;
+
+  --accent: #c8f24e;          /* единственный акцент */
+  --accent-ink: #0d1206;      /* текст на акцентной плашке */
+  --accent-08: rgba(200, 242, 78, 0.08);
+  --accent-16: rgba(200, 242, 78, 0.16);
+  --accent-32: rgba(200, 242, 78, 0.32);
+
+  /* --- типографика --- */
+  --font-display: 'Geologica', 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --font-ui: 'Manrope', 'Geologica', 'Segoe UI', system-ui, sans-serif;
+
+  /* --- геометрия --- */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --maxw: 1120px;
+
+  /* --- тени --- */
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  --shadow-2: 0 30px 70px -40px rgba(0, 0, 0, 1);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;           /* плавный скролл между секциями */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--bg-1);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.55;
+  letter-spacing: 0.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Фон страницы: графитовый градиент + едва заметная техническая сетка.
+   Никакого «космоса» — просто ощущение интерфейса. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #191d27 0%, var(--bg-1) 45%, var(--bg-0) 100%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(90% 70% at 50% 20%, #000 0%, transparent 78%);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1.02;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ---------- общие утилиты ---------- */
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 clamp(18px, 5vw, 40px);
+}
+
+.section {
+  position: relative;
+  padding: clamp(72px, 12vh, 140px) 0;
+}
+
+/* Мелкая моноширинно-техническая подпись HUD */
+.hud {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.hud--accent {
+  color: var(--accent);
+}
+
+/* Панель-карточка «как в игровом меню» */
+.panel {
+  position: relative;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+}
+
+/* Уголки-скобки — фирменная деталь интерфейса */
+.brackets::before,
+.brackets::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--accent-32);
+  pointer-events: none;
+}
+
+.brackets::before {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: var(--r-lg);
+}
+
+.brackets::after {
+  right: -1px;
+  bottom: -1px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: var(--r-lg);
+}
+
+/* Кнопка */
+.btn {
+  --btn-bg: var(--accent);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 28px;
+  border: 0;
+  border-radius: var(--r-md);
+  background: var(--btn-bg);
+  color: var(--accent-ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: transform 0.18s var(--ease-out), box-shadow 0.25s var(--ease-out),
+    filter 0.2s var(--ease-out);
+  box-shadow: 0 10px 30px -14px var(--accent-32);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 16px 34px -14px var(--accent-32);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.985);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--line-2);
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.btn--ghost:hover {
+  color: var(--text);
+  border-color: var(--accent-32);
+  box-shadow: none;
+  filter: none;
+}
+
+:where(button, a):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- уважение к prefers-reduced-motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  body::after {
+    display: none;
+  }
+}

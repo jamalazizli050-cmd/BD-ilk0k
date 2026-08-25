@@ -1,0 +1,185 @@
+/* =========================================================
+   СТИЛИ ЭКРАНА-РАСКРЫТИЯ
+   ========================================================= */
+
+.section {
+  position: relative;
+  padding-top: clamp(40px, 7vh, 80px);
+}
+
+.block {
+  margin-bottom: clamp(56px, 9vh, 110px);
+}
+
+.block:last-child {
+  margin-bottom: 0;
+}
+
+.head {
+  max-width: 640px;
+  margin-bottom: clamp(20px, 3.4vh, 34px);
+}
+
+.title {
+  margin: 10px 0 12px;
+  font-size: clamp(28px, 5vw, 50px);
+  font-weight: 700;
+}
+
+.lead {
+  color: var(--text-2);
+  font-size: clamp(14px, 1.6vw, 17px);
+}
+
+/* ---------- список пойманных фраз ---------- */
+.loot {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 10px;
+}
+
+.lootItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent-32);
+  border-radius: var(--r-sm);
+  background: var(--panel);
+  transition: border-color 0.25s var(--ease-out), background 0.25s var(--ease-out);
+}
+
+.lootItem:hover {
+  background: var(--panel-2);
+  border-left-color: var(--accent);
+}
+
+.lootIndex {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.lootText {
+  flex: 1;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.lootKind {
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+/* ---------- плашка achievement ---------- */
+.achWrap {
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  justify-content: center;
+  padding: clamp(24px, 6vh, 60px) 0 clamp(48px, 9vh, 96px);
+}
+
+.ach {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 26px);
+  width: 100%;
+  max-width: 660px;
+  padding: clamp(18px, 3vw, 26px) clamp(20px, 3.4vw, 32px);
+  overflow: hidden;
+  border: 1px solid var(--accent-32);
+  border-radius: var(--r-lg);
+  background:
+    linear-gradient(100deg, var(--accent-08), rgba(255, 255, 255, 0.035) 55%, transparent),
+    linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  box-shadow: var(--shadow-2), 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.achIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: clamp(54px, 10vw, 68px);
+  height: clamp(54px, 10vw, 68px);
+  border: 1px solid var(--accent-32);
+  border-radius: var(--r-md);
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.achIconInner {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 4vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+}
+
+.achBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.achTitle {
+  font-size: clamp(21px, 4vw, 33px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.achMeta {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* блик, пробегающий по плашке один раз */
+.achShine {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -60%;
+  width: 38%;
+  transform: skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.11),
+    transparent
+  );
+  animation: shine 1.15s var(--ease-out) 0.4s 1 forwards;
+}
+
+@keyframes shine {
+  to {
+    left: 130%;
+  }
+}
+
+@media (max-width: 560px) {
+  .ach {
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .lootKind {
+    display: none;
+  }
+}
